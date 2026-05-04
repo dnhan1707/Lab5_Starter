@@ -5,7 +5,9 @@ window.addEventListener('DOMContentLoaded', init);
 function init() {
   // TODO
   const synth = window.speechSynthesis;
-  const voiceSelect = document.querySelector("select")
+  const voiceSelect = document.querySelector("select");
+  const textArea = document.querySelector("textarea");
+  const buttonTag = document.querySelector("button");
   let voices = [];
 
   function loadVoices() {
@@ -21,4 +23,10 @@ function init() {
   }
 
   synth.onvoiceschanged = loadVoices;
+
+  buttonTag.addEventListener("click", function () {
+    const textvalue = textArea.value;
+    const utterThis = new SpeechSynthesisUtterance(textvalue);
+    const selectedOption = voiceSelect.selectedOptions[0].getAttribute("data-name");
+  })
 }
