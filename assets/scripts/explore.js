@@ -28,5 +28,11 @@ function init() {
     const textvalue = textArea.value;
     const utterThis = new SpeechSynthesisUtterance(textvalue);
     const selectedOption = voiceSelect.selectedOptions[0].getAttribute("data-name");
+    for (const voice of voices) {
+      if (voice.name === selectedOption) {
+        utterThis.voice = voice;
+      }
+    }
+    synth.speak(utterThis);
   })
 }
