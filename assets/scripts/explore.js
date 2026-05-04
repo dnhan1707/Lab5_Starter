@@ -8,6 +8,10 @@ function init() {
   const voiceSelect = document.querySelector("select");
   const textArea = document.querySelector("textarea");
   const buttonTag = document.querySelector("button");
+  const smilingFace = document.querySelector("img");
+  const smilingFaceLink = "assets/images/smiling.png";
+  const smilingFaceLinkOpen = "assets/images/smiling-open.png";
+
   let voices = [];
 
   function loadVoices() {
@@ -26,6 +30,8 @@ function init() {
 
   buttonTag.addEventListener("click", function () {
     const textvalue = textArea.value;
+    if (!textvalue) return;
+    
     const utterThis = new SpeechSynthesisUtterance(textvalue);
     const selectedOption = voiceSelect.selectedOptions[0].getAttribute("data-name");
     for (const voice of voices) {
@@ -33,6 +39,14 @@ function init() {
         utterThis.voice = voice;
       }
     }
+    utterThis.onstart = function () {
+      smilingFace.src = smilingFaceLinkOpen;
+    }
+
+    utterThis.onend = function () {
+      smilingFace.src = smilingFaceLink;
+    }
+
     synth.speak(utterThis);
   })
 }
