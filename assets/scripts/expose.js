@@ -1,5 +1,4 @@
 // expose.js
-
 window.addEventListener('DOMContentLoaded', init);
 
 function init() {
@@ -18,6 +17,10 @@ function init() {
   const buttonTag = document.querySelector("button");
   const audioTag = document.querySelector("audio");
 
+  //confetti
+  const jsConfetti = new JSConfetti();
+  let isPartyHorn = false; 
+
   hornSelectTag.addEventListener("change", function () {
     const selectedValue = this.value;
     
@@ -26,24 +29,28 @@ function init() {
       case "air-horn":
         imageTag.src = baseImagesLink + "air-horn.svg";
         imageTag.alt = "air horn pic";
-        audioTag.src = baseAudioLink + "air-horn.mp3"
+        audioTag.src = baseAudioLink + "air-horn.mp3";
+        isPartyHorn = false;
         break;
 
       case "car-horn":
         imageTag.src = baseImagesLink + "car-horn.svg";
         imageTag.alt = "car horn pic";
-        audioTag.src = baseAudioLink + "car-horn.mp3"
+        audioTag.src = baseAudioLink + "car-horn.mp3";
+        isPartyHorn = false;
         break;
       
       case "party-horn":
         imageTag.src = baseImagesLink + "party-horn.svg";
         imageTag.alt = "party horn pic";
         audioTag.src = baseAudioLink + "party-horn.mp3"
+        isPartyHorn = true;
         break;
       
       default:
         imageTag.src = baseImagesLink + "no-image.png";
         imageTag.alt = "no image pic";
+        isPartyHorn = false;
         break;
     }
   })
@@ -64,6 +71,9 @@ function init() {
   })
 
   buttonTag.addEventListener("click", function () {
+    if (isPartyHorn == true) {
+      jsConfetti.addConfetti()
+    }
     audioTag.volume = volumeInput.value / 100;
     audioTag.play()
   })
