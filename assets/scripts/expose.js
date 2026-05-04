@@ -6,10 +6,17 @@ function init() {
   // TODO
   const baseImagesLink = "assets/images/";
   const baseIconLink = "assets/icons/"
+  const baseAudioLink = "assets/audio/"
 
-  // Make image changing based one selected Horn
+  // Image
   const hornSelectTag = document.getElementById("horn-select");
   const imageTag = document.querySelector("img");
+
+  // Sound
+  const volumeInput = document.getElementById("volume");
+  const volumeImage = document.querySelector("#volume-controls img");
+  const buttonTag = document.querySelector("button");
+  const audioTag = document.querySelector("audio");
 
   hornSelectTag.addEventListener("change", function () {
     const selectedValue = this.value;
@@ -19,16 +26,19 @@ function init() {
       case "air-horn":
         imageTag.src = baseImagesLink + "air-horn.svg";
         imageTag.alt = "air horn pic";
+        audioTag.src = baseAudioLink + "air-horn.mp3"
         break;
 
       case "car-horn":
         imageTag.src = baseImagesLink + "car-horn.svg";
         imageTag.alt = "car horn pic";
+        audioTag.src = baseAudioLink + "car-horn.mp3"
         break;
       
       case "party-horn":
         imageTag.src = baseImagesLink + "party-horn.svg";
         imageTag.alt = "party horn pic";
+        audioTag.src = baseAudioLink + "party-horn.mp3"
         break;
       
       default:
@@ -38,12 +48,10 @@ function init() {
     }
   })
 
-  // Sounds change
-  const volumeInput = document.getElementById("volume");
-  const volumeImage = document.querySelector("#volume-controls img");
 
   volumeInput.addEventListener("input", function () {
     const volumeValue = this.value;
+    audioTag.volume = volumeValue / 100;
     if (volumeValue == 0) {
       volumeImage.src = baseIconLink + "volume-level-0.svg";
     } else if (volumeValue < 33) {
@@ -53,5 +61,10 @@ function init() {
     } else {
       volumeImage.src = baseIconLink + "volume-level-3.svg";
     }
+  })
+
+  buttonTag.addEventListener("click", function () {
+    audioTag.volume = volumeInput.value / 100;
+    audioTag.play()
   })
 }
